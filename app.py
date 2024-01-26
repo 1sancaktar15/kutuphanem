@@ -1,7 +1,19 @@
 from flask import Flask
 from flask import render_template
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.db'
+db = SQLAlchemy(app)
+
+class Item(db.Model):
+    id = db.Column(db.Integer(), primary_key= True)
+    name = db.Column(db.String(length=30), nullable=False, unique=True)
+    genre = db.Column(db.String(length=30), nullable=False, unique=True)
+    page = db.Column(db.Integer(), nullable=False,unique=True)
+    blurb = db.Column(db.String(length=1024), nullable=False, unique=True)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
